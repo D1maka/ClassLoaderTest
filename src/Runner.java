@@ -1,24 +1,29 @@
+import java.io.IOException;
 
 public class Runner {
 	public static void main(String[] args) {
-		String[] paths = {"C:\\Users\\Dmytro_Veres@epam.com\\workspace\\ClassLoaderTest\\bin", "C:\\Users\\Dmytro_Veres@epam.com\\workspace\\ClassLoaderTest\\src"};
-		TestModuleClassLoader loader = new TestModuleClassLoader(paths);
-		while(true){
+		String[] paths = { "C:\\Users\\Dmytro_Veres@epam.com\\workspace\\ClassLoaderTest\\src" };
+		
+		while (true) {
 			try {
-				Class testModuleClass = Class.forName("TestModule", true, loader);
+				TestModuleClassLoader loader = new TestModuleClassLoader(paths);
+				Class testModuleClass = Class.forName("TestModule", true,
+						loader);
 				Object test = testModuleClass.newInstance();
 				System.out.println(test.toString());
+				System.in.read();
+				System.in.read();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Class with such name could not be found");
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Could not create the instance of class");
 			} catch (IllegalAccessException e) {
+				System.out.println("Don't have access for method toString() of class");
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 }

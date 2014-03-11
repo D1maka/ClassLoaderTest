@@ -7,17 +7,15 @@ import java.util.Map;
 
 public class TestModuleClassLoader extends ClassLoader {
 
-	private Map cachedLoadedClasses;
 	private String[] classPaths;
 
 	public TestModuleClassLoader(String[] paths) {
-		cachedLoadedClasses = new HashMap();
 		classPaths = paths;
 	}
 
 	public Class loadClass(String name) throws ClassNotFoundException {
 		Class resultClass = null;
-		if (name.contains("Object")) {
+		if (name.contains("Object") || name.contains("Constructor")) {
 			resultClass = super.getSystemClassLoader().loadClass(name);
 		} else {
 			resultClass = findClass(name);
@@ -28,7 +26,7 @@ public class TestModuleClassLoader extends ClassLoader {
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
 		Class resultClass = null;
 
-		File javaFile = findFile(name, ".java"); // mb fix this
+		File javaFile = findFile(name, ".java");
 		File classFile = findFile(name, ".class");
 		try {
 			if (isNewerVersion(javaFile, classFile)) {
@@ -69,7 +67,6 @@ public class TestModuleClassLoader extends ClassLoader {
 		}
 
 		int ret = p.exitValue();
-
 		return ret == 0;
 	}
 
@@ -94,9 +91,6 @@ public class TestModuleClassLoader extends ClassLoader {
 		} catch (FileNotFoundException fnfe) {
 			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
-		} catch (IOException ioe) {
-			// TODO Auto-generated catch block
-			ioe.printStackTrace();
 		} finally {
 			fis.close();
 		}
