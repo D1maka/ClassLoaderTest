@@ -1,4 +1,4 @@
-package com.epam.loader
+package com.epam.loader;
 import java.io.IOException;
 
 public class Runner {
@@ -8,7 +8,7 @@ public class Runner {
 		while (true) {
 			try {
 				TestModuleClassLoader loader = new TestModuleClassLoader(paths);
-				Class testModuleClass = Class.forName("TestModule", true,
+				Class testModuleClass = Class.forName("com.epam.loader.TestModule", true,
 						loader);
 				Object test = testModuleClass.newInstance();
 				System.out.println(test.toString());

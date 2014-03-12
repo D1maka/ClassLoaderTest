@@ -1,4 +1,4 @@
-package com.epam.loader
+package com.epam.loader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +31,7 @@ public class TestModuleClassLoader extends ClassLoader {
 	public Class loadClass(String name) throws ClassNotFoundException {
 		Class resultClass = null;
 		if (name.contains("Object") || name.contains("Constructor")) {
+		//if (name.contains("java.")) {
 			resultClass = super.getSystemClassLoader().loadClass(name);
 		} else {
 			resultClass = findClass(name);
