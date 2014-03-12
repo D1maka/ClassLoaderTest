@@ -11,7 +11,7 @@ import java.util.Map;
  * The class loads class files from the classPath paths,
  * if the java file is changed during the execution, class
  * loader compiles and loads a new version. Load of classes
- * that contain "Object" or "Constructor" is delegated to 
+ * that contains "java." is delegated to 
  * parent class loader.
  * 
  * @author Dmytro_Veres
@@ -30,8 +30,7 @@ public class TestModuleClassLoader extends ClassLoader {
 	 */
 	public Class loadClass(String name) throws ClassNotFoundException {
 		Class resultClass = null;
-		if (name.contains("Object") || name.contains("Constructor")) {
-		//if (name.contains("java.")) {
+		if (name.contains("java.")) {
 			resultClass = super.getSystemClassLoader().loadClass(name);
 		} else {
 			resultClass = findClass(name);
