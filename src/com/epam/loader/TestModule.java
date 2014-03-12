@@ -1,3 +1,4 @@
+package com.epam.loader
 
 public class TestModule {
 	@Override

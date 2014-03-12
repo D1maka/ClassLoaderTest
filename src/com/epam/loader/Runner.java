@@ -1,3 +1,4 @@
+package com.epam.loader
 import java.io.IOException;
 
 public class Runner {
