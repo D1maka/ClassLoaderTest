@@ -3,11 +3,10 @@ import java.io.IOException;
 
 public class Runner {
 	public static void main(String[] args) {
-		String[] paths = { "C:\\Users\\Dmytro_Veres@epam.com\\workspace\\ClassLoaderTest\\src" };
 		
 		while (true) {
 			try {
-				TestModuleClassLoader loader = new TestModuleClassLoader(paths);
+				TestModuleClassLoader loader = new TestModuleClassLoader();
 				Class testModuleClass = Class.forName("com.epam.loader.TestModule", true,
 						loader);
 				Object test = testModuleClass.newInstance();

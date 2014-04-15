@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,11 +20,16 @@ import java.util.Map;
  */
 public class TestModuleClassLoader extends ClassLoader {
 
-	private String[] classPaths;
+	private ArrayList<String> classPaths;
 
-	public TestModuleClassLoader(String[] paths) {
-		classPaths = paths;
-	}
+	public TestModuleClassLoader() {
+        classPaths = new ArrayList<String>();
+        String classesPath = TestModuleClassLoader.class.getClassLoader().getResource(".").getPath();
+        String basePath = System.getProperty("user.dir");
+        String sourcePath = basePath + File.separatorChar + "src" + File.separatorChar;
+        classPaths.add(classesPath);
+        classPaths.add(sourcePath);
+    }
 
 	/* (non-Javadoc)
 	 * @see java.lang.ClassLoader#loadClass(java.lang.String)
@@ -90,7 +96,7 @@ public class TestModuleClassLoader extends ClassLoader {
 	 * @throws IOException if execution of compilation terminates
 	 */
 	private boolean compile(File javaFile) throws IOException {
-		Process p = Runtime.getRuntime().exec("javac " + javaFile);
+		Process p = Runtime.getRuntime().exec("javac " + javaFile + " -d " + classPaths.get(0));
 
 		try {
 			p.waitFor();
